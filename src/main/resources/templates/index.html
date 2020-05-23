@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>Insert title here</title>
+<style type="text/css">
+	* {margin:0; padding:0;}
+	div {
+	margin:0 auto;
+	width:600px;
+	}
+	#tip {
+	text-align:center;
+	height:50px;
+	line-height:50px;
+	}
+	table {
+	margin:0 auto;
+	width:600px;
+	border-collapse: collapse;
+	}
+	table td {
+	text-align:center;
+	}
+	.title {
+	font-weight:bolder;
+	background-color:#426ab3;
+	}
+	table:first-of-type {
+	height:30px;
+	line-height:30px;
+	}
+	table:first-of-type td {
+	font-size:16px;
+	/* font-weight:bolder; */
+	}
+	</style>
+	<script type="text/javascript" src="scripts/jquery-1.12.4.js"></script>
+	<script type="text/javascript">
+	
+		function Solr(){
+			location.href = "selectSolr.win";
+		}
+		function Redis(){
+			location.href = "selectStaff.win";
+		}
+			
+			function querenDelete(sid){
+				var isremove = confirm("确认删除嘛？");
+				if(isremove == true){
+					alert(123)
+					//触发ajax请求，实现局部刷新
+					$.ajax({
+						url		:	"removeStaff.win",
+						type	:	"post",
+						data	:	{"sid":sid},
+						dataType:	"json",
+						error	:	function () {
+							alert("删除失败！");
+						},
+						success	:	function(msg){
+					
+							//参数msg自动存储了“响应数据”，json数组，用于局部刷新
+							alert(msg.bool);
+							location.href = "selectStaff.win";
+						} 
+					});
+				}
+			}
+			
+		</script>
+
+</head>
+<body>
+<table>
+        <tr>
+	        <td >
+		        <input type="button" value="Solr" onclick="Solr()" />&nbsp;
+		        <input type="button" value="Redis" onclick="Redis()" />
+	        </td>
+            <td>
+                <form action="selectSolr.win" method="POST">
+                	<input type="text" name="tname" value = "" />
+                    &nbsp;<input type="submit" value="提交"/>
+                </form>
+            </td>
+             <td><a th:href="'selectDepartment.win'">新增员工信息</a></td>
+        </tr>
+    </table>
+	<table border="1" >
+	    <tr class="title">
+	        <td th:text="姓名"></td>
+	        <td th:text="部门"></td>
+	        <td th:text="电话"></td>
+	        <td th:text="地址"></td>
+	        <td th:text="操作"></td>
+	    </tr>
+			<!-- <tr>
+				<td colspan="5"><h2>未查到符合您的查询条件的理财产品！</h2></td>
+			</tr> -->
+		<tr th:each="fp:${list}">
+		        <td th:text="${fp.sname }"></td>
+		        <td th:text="${fp.department }"></td>
+		        <td th:text="${fp.phot }"></td>
+		        <td th:text="${fp.address }"></td>
+	        <td><a th:href="'javascript:querenDelete('+${fp.id}+')'">删除</a>
+	        	<a th:href="'selectStaffKey.win?pk='+${fp.id}">修改</a></td>
+	    </tr>
+	</table>
+</body>
+</html>

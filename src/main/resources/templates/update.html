@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8"/>
+<title>Insert title here</title>
+<style type="text/css">
+	* {margin:0; padding:0;}
+	div {
+	margin:0 auto;
+	width:420px;
+	}
+	table {
+	width:420px;
+	border-collapse: collapse;
+	}
+	.title {
+	font-size:30px;
+	height:50px;
+	line-height:50px;
+	text-align:center;
+	}
+	.center {
+	text-align:center;
+	}
+	</style>
+</head>
+<body>
+	<div>
+	    <form action="updateStaff.win" method="post">
+	        <table border="0" >
+	            <tr class="title">
+	                <td colspan="3">修改员工</td>
+	            </tr>
+	            <tr>
+	                <td>姓名：</td>
+	                <td>
+		                <input type="hidden" name="id" th:value="${sff.id}" id="id" />
+		                <input type="text" id="sname" th:value="${sff.sname}" name="sname" />
+	                </td>
+	                <td><span id="ajax_info"></span></td>
+	            </tr>
+	            <tr>
+	                <td> 部门：</td>
+			          <td> 
+			          	<select name="department"  id="department" >
+	                        <option value="">请选择</option>
+		                    <option th:each="de:${list}" th:value="${de.id}"
+		                     th:selected="${sff.department}" th:text="${de.department}"></option>
+	                    </select>
+	                </td>
+	                <td></td>
+	            </tr>
+	            <tr>
+	                <td>电话：</td>
+	                <td><input type="text" id="phot" th:value="${sff.phot}" name="phot"/></td>
+	                <td></td>
+	            </tr>
+	             <tr>
+	                <td>地址：</td>
+	                <td><input type="text" id="address" th:value="${sff.address}" name="address"/>（yyyy-MMM-dd）</td>
+	                <td></td>
+	            </tr>
+	            <tr class="center">
+	                <td colspan="3">
+	                	<input type="submit" value="保存"/>&nbsp;
+	                	<input type="button" value="返回" onclick="runback()"/></td>
+	            </tr>
+	        </table>
+	    </form>
+	</div>
+<script type="text/javascript" src="/scripts/jquery-1.12.4.js"></script>
+	<script type="text/javascript">
+	function runback(){
+		location.href = "selectStaff.win";
+	}
+	/* $(function(){
+		$("#id").val("${sff.id}");
+		$("#sname").val("${sff.sname}");
+		$("#department").val("${sff.department}");
+		$("#phot").val("${sff.phot}");
+		$("#address").val("${sff.address}");
+	}); */ 
+	
+</script>
+</body>
+</html>
